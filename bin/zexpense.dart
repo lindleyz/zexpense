@@ -1,37 +1,29 @@
+
 import 'dart:io';
+import 'package:zexpense/zexpense.dart';
 void main() {
- List<Map<String, String?>> expenseList = [];
+ List<Map<String, dynamic>> expenseList = [];
 do {
-   print("enter date"
+   print("enter date mm/dd/yy"
   );
- String? date= stdin.readLineSync(); 
+ String? date= stdin.readLineSync();
+ if (date == null) continue; 
+if (!date.contains(RegExp(r'^([0-9]{1,2})/([0-9]{1,2})/([0-9]{2})$'))) continue;
  print("enter item");
 String? item = stdin.readLineSync();
+if (item == null) continue; 
+if (!item.contains(RegExp(r'^[a-zA-Z0-9\s]+$'))) continue;
 print("enter amount");
 String? amount = stdin.readLineSync();
-var expense= {"date":date, "item":item, "amount":amount};
+if(amount == null) continue; 
+var myDouble = double.parse(amount);
+if(myDouble< 0) continue; // result: true;
+var expense= {"date":date, "item":item, "amount":myDouble};
 expenseList.add(expense);
 printExpense(expenseList);
   
 } while (isDone());
 
 }
-void printExpense(List<Map<String, String?>> theList) {
-  for (var expense in theList) {
-    final item = expense["item"];
-    final amount = expense["amount"];
-    final date = expense["date"]; 
-    print("Purchased $item for $amount on $date");
-  }
-}
 
-bool isDone() {
-  print("Are you done? (Y)es or (N)o");
-  String? done = stdin.readLineSync();
-  if (done == null) return false;
-  if (done.toUpperCase().contains("Y")) {
-    return false;
-  }
-  return true;
-}
 

@@ -1,11 +1,16 @@
 import 'dart:io';
-void printExpense(List<Map<String, String?>> theList) {
+void printExpense(List<Map<String, dynamic>> theList) {
+  var sumAmount = 0.0;
+  var averageAmount = 0.0; 
   for (var expense in theList) {
     final item = expense["item"];
     final amount = expense["amount"];
+    sumAmount += amount;
     final date = expense["date"]; 
     print("Purchased $item for $amount on $date");
-  }
+  } 
+  averageAmount = sumAmount / theList.length;
+  print("Average Amount: $averageAmount Total Amount: $sumAmount");
 }
 
 bool isDone() {
@@ -16,6 +21,7 @@ bool isDone() {
     return false;
   }
   return true;
+ 
 }
 
 
